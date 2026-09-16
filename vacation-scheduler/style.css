@@ -1,0 +1,149 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: #f2f5f7;
+  color: #1f2933;
+  padding: 24px 16px 64px;
+}
+
+.page {
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+h1 {
+  margin-bottom: 4px;
+}
+
+.subtitle {
+  margin-top: 0;
+  color: #5b6b77;
+}
+
+form {
+  background: #ffffff;
+  border: 1px solid #dbe2e8;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 32px;
+}
+
+.field {
+  margin-bottom: 16px;
+  flex: 1;
+}
+
+.field-row {
+  display: flex;
+  gap: 16px;
+}
+
+label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #334049;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #c7d0d6;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-family: inherit;
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+  border-color: #2f7fd6;
+  box-shadow: 0 0 0 3px rgba(47, 127, 214, 0.15);
+}
+
+textarea {
+  min-height: 70px;
+  resize: vertical;
+}
+
+button {
+  background: #2f7fd6;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 20px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #256bb8;
+}
+
+.error-message {
+  color: #c23b3b;
+  font-size: 0.88rem;
+  margin: -6px 0 12px;
+  min-height: 1.1em;
+}
+
+h2 {
+  margin-bottom: 12px;
+}
+
+.empty-message {
+  color: #5b6b77;
+}
+
+.vacation-card {
+  background: #ffffff;
+  border: 1px solid #dbe2e8;
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.vacation-info h3 {
+  margin: 0 0 4px;
+}
+
+.vacation-dates {
+  color: #2f7fd6;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin: 0 0 6px;
+}
+
+.vacation-notes {
+  color: #5b6b77;
+  font-size: 0.9rem;
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+.delete-btn {
+  background: none;
+  border: 1px solid #dbe2e8;
+  color: #c23b3b;
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.delete-btn:hover {
+  background: #fbeaea;
+  border-color: #c23b3b;
+}

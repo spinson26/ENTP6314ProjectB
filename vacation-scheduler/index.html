@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vacation Scheduler</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="page">
+  <h1>Vacation Scheduler</h1>
+  <p class="subtitle">Plan and track upcoming trips.</p>
+
+  <form id="vacation-form">
+    <div class="field">
+      <label for="name">Trip name</label>
+      <input type="text" id="name" placeholder="e.g. Trip to Hawaii" required>
+    </div>
+
+    <div class="field-row">
+      <div class="field">
+        <label for="start">Start date</label>
+        <input type="date" id="start" required>
+      </div>
+      <div class="field">
+        <label for="end">End date</label>
+        <input type="date" id="end" required>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="notes">Notes (optional)</label>
+      <textarea id="notes" placeholder="Anything you want to remember"></textarea>
+    </div>
+
+    <p id="error-message" class="error-message"></p>
+
+    <button type="submit">Add Vacation</button>
+  </form>
+
+  <h2>Upcoming Vacations</h2>
+  <p id="empty-message" class="empty-message">No vacations added yet.</p>
+  <div id="vacation-list"></div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
