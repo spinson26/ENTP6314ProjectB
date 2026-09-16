@@ -23,5 +23,5 @@ Current subfolders (at the repo root, one level up from this file):
 Explain changes in pain English. I am not a programmer.
 - Prefer the simplest solution that works.
 - Ask before adding any new service or library.
-- After each feature, remind me to commit.
+- Commit automatically at the end of each phase. Don't ask, don't just remind.
 - Never leave the ENTP 6314 folder.

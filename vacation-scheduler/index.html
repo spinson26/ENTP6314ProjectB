@@ -3,47 +3,165 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Vacation Scheduler</title>
+<title>Team Vacation Scheduler</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div class="page">
-  <h1>Vacation Scheduler</h1>
-  <p class="subtitle">Plan and track upcoming trips.</p>
+  <header class="app-header">
+    <h1>Team Vacation Scheduler</h1>
+    <p class="subtitle" id="header-subtitle"></p>
+  </header>
 
-  <form id="vacation-form">
-    <div class="field">
-      <label for="name">Trip name</label>
-      <input type="text" id="name" placeholder="e.g. Trip to Hawaii" required>
+  <nav class="tabs" id="tabs">
+    <button class="tab-button active" data-tab="schedule">Schedule</button>
+    <button class="tab-button" data-tab="employees">Employees</button>
+    <button class="tab-button" data-tab="requests">Requests</button>
+    <button class="tab-button" data-tab="dashboard">Dashboard</button>
+    <button class="tab-button" data-tab="checks">Self-checks</button>
+  </nav>
+
+  <!-- ---------------------------------------------------------------- -->
+  <section class="tab-panel" id="tab-schedule">
+    <div class="toolbar">
+      <button class="btn btn-primary" id="btn-allocate">Run auto-allocation</button>
+      <button class="btn" id="btn-clear">Clear all</button>
+
+      <span class="toolbar-divider"></span>
+
+      <button class="btn" id="btn-export-json">Export backup</button>
+      <button class="btn" id="btn-import-json">Import backup</button>
+      <button class="btn" id="btn-export-csv">Export for Excel</button>
+      <button class="btn btn-danger" id="btn-reset">Reset everything</button>
+
+      <input type="file" id="import-file" accept=".json,application/json" hidden>
     </div>
 
-    <div class="field-row">
-      <div class="field">
-        <label for="start">Start date</label>
-        <input type="date" id="start" required>
+    <div class="toolbar">
+      <span class="toolbar-note" id="toolbar-note"></span>
+      <span class="save-status" id="save-status"></span>
+    </div>
+
+    <div class="schedule-layout">
+      <div class="grid-wrap">
+        <p class="hint">
+          <span class="swatch swatch-normal"></span> assigned
+          <span class="swatch swatch-summer"></span> summer
+          <span class="swatch swatch-lottery"></span> lottery week
+          <span class="swatch swatch-error"></span> rule problem
+          &nbsp;— click any square to add or remove a week.
+        </p>
+        <div class="grid-scroll">
+          <table class="grid" id="grid"></table>
+        </div>
       </div>
-      <div class="field">
-        <label for="end">End date</label>
-        <input type="date" id="end" required>
+
+      <aside class="violations" id="violations"></aside>
+    </div>
+  </section>
+
+  <!-- ---------------------------------------------------------------- -->
+  <section class="tab-panel hidden" id="tab-employees">
+    <div class="panel">
+      <label class="field-label" for="employee-picker">Showing</label>
+      <select id="employee-picker" class="select"></select>
+      <div id="employee-summary"></div>
+    </div>
+
+    <div class="two-up">
+      <div class="panel">
+        <h2>Assigned weeks</h2>
+        <div id="employee-weeks"></div>
+      </div>
+
+      <div class="panel">
+        <h2>Request an extra week</h2>
+        <p class="hint">Only weeks with room under the coverage cap can be requested.</p>
+        <div class="field">
+          <label class="field-label" for="request-week">Week</label>
+          <select id="request-week" class="select"></select>
+        </div>
+        <div class="field">
+          <label class="field-label" for="request-note">Note (optional)</label>
+          <input type="text" id="request-note" class="text-input" placeholder="Why you need it">
+        </div>
+        <button class="btn btn-primary" id="btn-request">Submit request</button>
+        <p class="form-note" id="request-note-msg"></p>
+
+        <h2 class="spaced">Your requests</h2>
+        <div id="employee-requests"></div>
       </div>
     </div>
+  </section>
 
-    <div class="field">
-      <label for="notes">Notes (optional)</label>
-      <textarea id="notes" placeholder="Anything you want to remember"></textarea>
+  <section class="tab-panel hidden" id="tab-requests">
+    <div class="panel">
+      <h2>Pending requests</h2>
+      <div id="pending-requests"></div>
     </div>
 
-    <p id="error-message" class="error-message"></p>
+    <div class="panel">
+      <h2>Already decided</h2>
+      <div id="decided-requests"></div>
+    </div>
+  </section>
 
-    <button type="submit">Add Vacation</button>
-  </form>
+  <section class="tab-panel hidden" id="tab-dashboard">
+    <div class="stat-row" id="stat-row"></div>
 
-  <h2>Upcoming Vacations</h2>
-  <p id="empty-message" class="empty-message">No vacations added yet.</p>
-  <div id="vacation-list"></div>
+    <div class="panel">
+      <h2>People on vacation each week</h2>
+      <p class="hint">
+        <span class="swatch swatch-normal"></span> normal
+        <span class="swatch swatch-summer"></span> summer
+        <span class="swatch swatch-lottery"></span> lottery
+        <span class="swatch swatch-error"></span> over the cap
+      </p>
+      <div id="coverage-chart"></div>
+    </div>
+
+    <div class="panel">
+      <h2>Rule problems</h2>
+      <div id="dashboard-violations"></div>
+    </div>
+
+    <div class="panel">
+      <h2>Every employee</h2>
+      <div id="dashboard-table"></div>
+    </div>
+  </section>
+
+  <!-- ---------------------------------------------------------------- -->
+  <section class="tab-panel hidden" id="tab-checks">
+    <div class="panel">
+      <h2>Rules in effect</h2>
+      <div id="rules-summary"></div>
+    </div>
+
+    <div class="panel">
+      <h2>Self-checks</h2>
+      <div id="self-checks"></div>
+    </div>
+
+    <div class="panel">
+      <h2>The 52 weeks</h2>
+      <p class="hint">
+        <span class="swatch swatch-summer"></span> summer week
+        <span class="swatch swatch-lottery"></span> lottery week
+      </p>
+      <table class="week-table" id="week-table"></table>
+    </div>
+  </section>
 </div>
 
-<script src="script.js"></script>
+<script src="rules.js"></script>
+<script src="employees.js"></script>
+<script src="calendar.js"></script>
+<script src="validate.js"></script>
+<script src="allocate.js"></script>
+<script src="storage.js"></script>
+<script src="selfcheck.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
